@@ -1,3 +1,4 @@
+import React from 'react';
 import { DetailView } from '../views';
 import { DetailViewContextProvider } from '../views/DetailView/DetailView.Context';
 import { GetServerSideProps } from 'next';
@@ -14,7 +15,7 @@ const Index: React.FC<ServerSideProps> = ({ userIP }) => (
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> =
   async ctx => {
-    const userIP: string = String(ctx.req.headers['X-Forwarded-For'] || ''); // || process.env.NEXT_PUBLIC_DEFAULT_IP
+    const userIP = String(ctx.req.headers['X-Forwarded-For'] || ''); // || process.env.NEXT_PUBLIC_DEFAULT_IP
     return {
       props: {
         userIP
