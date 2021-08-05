@@ -1,1 +1,1 @@
-export { IndexView } from './IndexView/IndexView';
+export { DetailView } from './DetailView/DetailView';
