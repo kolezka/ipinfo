@@ -15,7 +15,7 @@ const Index: React.FC<ServerSideProps> = ({ userIP }) => (
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> =
   async ctx => {
-    const userIP = String(ctx.req.headers['X-Forwarded-For'] || ''); // || process.env.NEXT_PUBLIC_DEFAULT_IP
+    const userIP = String(ctx.req.headers['x-forwarded-for'] || ''); // || process.env.NEXT_PUBLIC_DEFAULT_IP
     return {
       props: {
         userIP
