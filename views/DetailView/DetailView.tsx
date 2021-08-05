@@ -27,13 +27,11 @@ export const DetailView = () => {
               details={query.data as IDetails}
               fetching={query.isFetching}
             />
-
             <DetailsCard
               title={`Search IP ${searchIP}`}
               details={searchQuery.data as IDetails}
               fetching={searchQuery.isFetching || !searchIP}
             />
-
             <div className="md:col-span-2">
               <DetailViewSearchList />
             </div>

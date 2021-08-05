@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -11,9 +12,17 @@ interface ServerSideProps {
 }
 
 const Index: React.FC<ServerSideProps> = ({ userIP }) => (
-  <DetailViewContextProvider userIP={userIP}>
-    <DetailView />
-  </DetailViewContextProvider>
+  <>
+    <Head>
+      <meta
+        httpEquiv="Content-Security-Policy"
+        content="upgrade-insecure-requests"
+      />
+    </Head>
+    <DetailViewContextProvider userIP={userIP}>
+      <DetailView />
+    </DetailViewContextProvider>
+  </>
 );
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> =

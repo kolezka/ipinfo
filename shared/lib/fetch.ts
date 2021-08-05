@@ -25,7 +25,14 @@ fetch.interceptors.response.use(
     }
     return res.data;
   },
-  err => Promise.reject(err.isAxiosError ? err.response.data : err)
+  err => {
+    if (err.isAxiosError) {
+      if (err.response.data) {
+        return Promise.reject(err.response.data);
+      }
+    }
+    return Promise.reject(err);
+  }
 );
 
 export { fetch };
