@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
@@ -6,7 +8,16 @@ module.exports = {
       center: true
     },
     extend: {
+      minHeight: {
+        16: '4rem'
+      },
+      maxHeight: {
+        36: '9rem'
+      },
       colors: {
+        red: {
+          ...colors.red
+        },
         primary: {
           50: '#d2e3ff',
           100: '#b4d0ff',
