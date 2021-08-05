@@ -18,7 +18,13 @@ fetch.interceptors.request.use(
 );
 
 fetch.interceptors.response.use(
-  res => res.data,
+  res => {
+    if (res.data?.detail) {
+      // return Promise.reject(res.data);
+      throw res.data.detail;
+    }
+    return res.data;
+  },
   err => Promise.reject(err.isAxiosError ? err.response.data : err)
 );
 

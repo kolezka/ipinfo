@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
 import SearchIcon from '@heroicons/react/outline/SearchIcon';
 import { useDetailViewContext } from '../../DetailView.Context';
+import { toast } from 'react-toastify';
 
 interface FormFields {
   search: string;
@@ -10,6 +11,7 @@ interface FormFields {
 
 export const DetailViewSearchBar = () => {
   const { ip: search, changeSearchIP } = useDetailViewContext();
+
   const {
     register,
     handleSubmit,
@@ -20,6 +22,12 @@ export const DetailViewSearchBar = () => {
       search
     }
   });
+
+  React.useEffect(() => {
+    if (errors.search) {
+      toast.error('Invalid IP address or url');
+    }
+  }, [errors.search]);
 
   const onSubmit = ({ search }: FormFields) => {
     changeSearchIP(search);
