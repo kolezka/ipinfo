@@ -6,6 +6,7 @@ import { useDetailViewContext } from './DetailView.Context';
 import { DetailViewSearchBar } from './parts/DetailViewSearchBar/DetailViewSearchBar';
 import { DetailViewSearchList } from './parts/DetailViewSearchList/DetailViewSearchList';
 import { ToastContainer } from 'react-toastify';
+import { IDetails } from '../../shared/models/details/details.model';
 
 export const DetailView = () => {
   const { ip, searchIP } = useDetailViewContext();
@@ -23,13 +24,13 @@ export const DetailView = () => {
           <div className="grid gap-4 lg:gap-8 md:grid-cols-2">
             <DetailsCard
               title={`Current IP ${ip}`}
-              details={query.data}
+              details={query.data as IDetails}
               fetching={query.isFetching}
             />
 
             <DetailsCard
               title={`Search IP ${searchIP}`}
-              details={searchQuery.data}
+              details={searchQuery.data as IDetails}
               fetching={searchQuery.isFetching || !searchIP}
             />
 
