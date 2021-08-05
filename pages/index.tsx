@@ -1,23 +1,29 @@
 import React from 'react';
+import { GetServerSideProps } from 'next';
+import { QueryClient } from 'react-query';
+import { dehydrate } from 'react-query/hydration';
+import { getDetails } from '../shared/services/ipstack.service';
 import { DetailView } from '../views';
 import { DetailViewContextProvider } from '../views/DetailView/DetailView.Context';
-import { GetServerSideProps } from 'next';
 
 interface ServerSideProps {
   userIP: string;
 }
 
 const Index: React.FC<ServerSideProps> = ({ userIP }) => (
-  <DetailViewContextProvider initialIP={userIP}>
+  <DetailViewContextProvider userIP={userIP}>
     <DetailView />
   </DetailViewContextProvider>
 );
 
 export const getServerSideProps: GetServerSideProps<ServerSideProps> =
   async ctx => {
-    const userIP = String(ctx.req.headers['x-forwarded-for'] || ''); // || process.env.NEXT_PUBLIC_DEFAULT_IP
+    const queryClient = new QueryClient();
+    const userIP = String(ctx.req.headers['x-forwarded-for'] || '83.25.1.1'); // || process.env.NEXT_PUBLIC_DEFAULT_IP
+    await queryClient.prefetchQuery(['IP', userIP], () => getDetails(userIP));
     return {
       props: {
+        dehydratedState: dehydrate(queryClient),
         userIP
       }
     };

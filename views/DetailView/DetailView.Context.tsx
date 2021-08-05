@@ -1,8 +1,13 @@
 import React from 'react';
+import { useQuery } from 'react-query';
+import { IDetails } from '../../shared/models/details/details.model';
+import { getDetails } from '../../shared/services/ipstack.service';
 
 export interface IDetailViewContext {
   ip: string;
-  setIP: (str: string) => any;
+  searchIP: string;
+  changeSearchIP: (nextIP: string) => any;
+  searchList: string[];
 }
 
 export const DetailViewContext = React.createContext<IDetailViewContext>(
@@ -12,16 +17,37 @@ export const DetailViewContext = React.createContext<IDetailViewContext>(
 export const useDetailViewContext = () => React.useContext(DetailViewContext);
 
 export interface IDetailViewContextProviderProps {
-  initialIP?: string;
+  userIP: string;
 }
 
 export const DetailViewContextProvider: React.FC<IDetailViewContextProviderProps> =
-  ({ initialIP, children }) => {
-    const [ip, setIP] = React.useState<string>(initialIP || '');
+  ({ userIP, children }) => {
+    const [searchIP, setSearchIP] = React.useState<string>('');
+
+    const query = useQuery(['IP', userIP], () => getDetails(userIP), {
+      onSuccess: data => {
+        console.log('Success data');
+      }
+    });
+
+    const [searchList, setSearchList] = React.useState<string[]>([]);
+
+    const changeSearchIP = (nextIP: string) => {
+      if (searchIP !== nextIP) {
+        // Update state for caching list of searches
+        if (query.data) {
+          const nextSearchList = [nextIP, ...searchList];
+          setSearchList(nextSearchList);
+        }
+        setSearchIP(nextIP);
+      }
+    };
 
     const context: IDetailViewContext = {
-      ip,
-      setIP: str => setIP(str)
+      ip: userIP,
+      searchIP,
+      searchList,
+      changeSearchIP
     };
 
     return (
