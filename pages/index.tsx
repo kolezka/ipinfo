@@ -13,12 +13,6 @@ interface ServerSideProps {
 
 const Index: React.FC<ServerSideProps> = ({ userIP }) => (
   <>
-    <Head>
-      <meta
-        httpEquiv="Content-Security-Policy"
-        content="upgrade-insecure-requests"
-      />
-    </Head>
     <DetailViewContextProvider userIP={userIP}>
       <DetailView />
     </DetailViewContextProvider>
