@@ -24,11 +24,7 @@ export const DetailViewContextProvider: React.FC<IDetailViewContextProviderProps
   ({ userIP, children }) => {
     const [searchIP, setSearchIP] = React.useState<string>('');
 
-    const query = useQuery(['IP', userIP], () => getDetails(userIP), {
-      onSuccess: data => {
-        console.log('Success data');
-      }
-    });
+    const query = useQuery(['IP', userIP], () => getDetails(userIP));
 
     const [searchList, setSearchList] = React.useState<string[]>([]);
 
