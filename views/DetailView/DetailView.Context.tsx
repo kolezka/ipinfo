@@ -1,5 +1,6 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
+import { toast } from 'react-toastify';
 import { IDetails } from '../../shared/models/details/details.model';
 import { getDetails } from '../../shared/services/ipstack.service';
 
@@ -24,7 +25,25 @@ export const DetailViewContextProvider: React.FC<IDetailViewContextProviderProps
   ({ userIP, children }) => {
     const [searchIP, setSearchIP] = React.useState<string>('');
 
-    const query = useQuery(['IP', userIP], () => getDetails(userIP));
+    // const commonQueryOptions: UseQueryOptions = {
+    //   onError: (error: any) => {
+    //     toast.error(
+    //       error.isAxiosError ? error.response.data : error.toString()
+    //     );
+    //   }
+    // };
+
+    const query = useQuery(['IP', userIP], () => getDetails(userIP), {
+      onError: error => toast.error('Error: ' + error)
+    });
+
+    useQuery(['IP', searchIP], () => getDetails(searchIP), {
+      onError: (error: any) => {
+        setSearchIP('');
+        toast.error('Error: ' + error);
+      },
+      enabled: !!searchIP
+    });
 
     const [searchList, setSearchList] = React.useState<string[]>([]);
 

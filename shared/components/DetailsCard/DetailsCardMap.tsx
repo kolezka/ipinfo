@@ -2,7 +2,6 @@ import React from 'react';
 import Mapbox from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { IDetails } from '../../models/details/details.model';
-import { useDetailViewContext } from '../../../views/DetailView/DetailView.Context';
 
 export interface IDetailsCardMapProps {
   details?: IDetails;
@@ -35,15 +34,13 @@ export const DetailsCardMap: React.FC<IDetailsCardMapProps> = ({ details }) => {
       })
         .setLngLat(center)
         .addTo(mapRef.current);
-    } else {
-      alert('here');
     }
   };
 
   const destroy = () => mapRef.current?.remove();
 
   React.useEffect(() => {
-    if (details) {
+    if (details?.ip) {
       if (!initialized) {
         initialize();
       } else {

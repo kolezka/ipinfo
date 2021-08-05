@@ -5,6 +5,7 @@ import { DetailsCard } from '../../shared/components/DetailsCard/DetailsCard';
 import { useDetailViewContext } from './DetailView.Context';
 import { DetailViewSearchBar } from './parts/DetailViewSearchBar/DetailViewSearchBar';
 import { DetailViewSearchList } from './parts/DetailViewSearchList/DetailViewSearchList';
+import { ToastContainer } from 'react-toastify';
 
 export const DetailView = () => {
   const { ip, searchIP } = useDetailViewContext();
@@ -39,6 +40,7 @@ export const DetailView = () => {
         </div>
 
         <DetailViewSearchBar />
+        <ToastContainer />
       </div>
     </div>
   );
