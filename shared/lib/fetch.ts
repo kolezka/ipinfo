@@ -20,9 +20,13 @@ fetch.interceptors.request.use(
 fetch.interceptors.response.use(
   res => {
     if (res.data?.detail) {
-      // return Promise.reject(res.data);
       throw res.data.detail;
     }
+
+    if (res.data.success === false) {
+      throw res.data.error.info;
+    }
+
     return res.data;
   },
   err => {

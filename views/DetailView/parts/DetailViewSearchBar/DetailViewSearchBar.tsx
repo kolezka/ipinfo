@@ -23,12 +23,6 @@ export const DetailViewSearchBar = () => {
     }
   });
 
-  React.useEffect(() => {
-    if (errors.search) {
-      toast.error('Invalid IP address or url');
-    }
-  }, [errors.search]);
-
   const onSubmit = ({ search }: FormFields) => {
     changeSearchIP(search);
     reset({
@@ -36,20 +30,21 @@ export const DetailViewSearchBar = () => {
     });
   };
 
+  const onError = () => {
+    toast.error('Invalid IP or url');
+  };
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSubmit(onSubmit)();
-      reset({
-        search: ''
-      });
     }
   };
 
   return (
     <form
       autoComplete="off"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className="flex max-w-full w-full"
     >
       <input
