@@ -1,7 +1,5 @@
 # IP Info
 
-Simple application made for recruitment process.
-
 #### Live Version
 
 ```
