@@ -31,7 +31,7 @@ fetch.interceptors.response.use(
   },
   err => {
     if (err.isAxiosError) {
-      if (err.response.data) {
+      if (err.response?.data) {
         return Promise.reject(err.response.data);
       }
     }
