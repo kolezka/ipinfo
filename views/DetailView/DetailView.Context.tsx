@@ -25,19 +25,11 @@ export const DetailViewContextProvider: React.FC<IDetailViewContextProviderProps
   ({ userIP, children }) => {
     const [searchIP, setSearchIP] = React.useState<string>('');
 
-    // const commonQueryOptions: UseQueryOptions = {
-    //   onError: (error: any) => {
-    //     toast.error(
-    //       error.isAxiosError ? error.response.data : error.toString()
-    //     );
-    //   }
-    // };
-
     const query = useQuery(['IP', userIP], () => getDetails(userIP), {
       onError: error => toast.error('Error: ' + error)
     });
 
-    useQuery(['IP', searchIP], () => getDetails(searchIP), {
+    useQuery(['IP', 'search', searchIP], () => getDetails(searchIP), {
       onError: (error: any) => {
         setSearchIP('');
         toast.error('Error: ' + error);

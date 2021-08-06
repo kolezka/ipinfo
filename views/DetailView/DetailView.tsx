@@ -13,9 +13,13 @@ export const DetailView = () => {
 
   const query = useQuery(['IP', ip], () => getDetails(ip));
 
-  const searchQuery = useQuery(['IP', searchIP], () => getDetails(searchIP), {
-    enabled: !!searchIP
-  });
+  const searchQuery = useQuery(
+    ['IP', 'search', searchIP],
+    () => getDetails(searchIP),
+    {
+      enabled: !!searchIP
+    }
+  );
 
   return (
     <div className="container px-4">
