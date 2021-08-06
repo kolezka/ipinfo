@@ -10,18 +10,14 @@ interface FormFields {
 }
 
 export const DetailViewSearchBar = () => {
-  const { ip: search, changeSearchIP } = useDetailViewContext();
+  const { changeSearchIP } = useDetailViewContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<FormFields>({
-    defaultValues: {
-      search
-    }
-  });
+  } = useForm<FormFields>({});
 
   const onSubmit = ({ search }: FormFields) => {
     changeSearchIP(search);
@@ -48,7 +44,7 @@ export const DetailViewSearchBar = () => {
       className="flex max-w-full w-full"
     >
       <input
-        placeholder="XXX.XXX.XXX.XXX"
+        placeholder="XXX.XXX.XXX.XXX or example.com"
         onKeyDown={onKeyDown}
         className={clsx(
           'min-w-0 transition-colors bg-white block outline-none flex-grow px-4 lg:px-8 rounded-tl-2xl text-lg tracking-widest',
@@ -59,7 +55,7 @@ export const DetailViewSearchBar = () => {
         {...register('search', {
           required: true,
           pattern:
-            /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/
+            /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|([a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+)$/
         })}
       />
 
