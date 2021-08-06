@@ -37,7 +37,7 @@ export const DetailViewSearchBar = () => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleSubmit(onSubmit)();
+      handleSubmit(onSubmit, onError)();
     }
   };
 
